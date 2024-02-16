@@ -8,16 +8,50 @@ export class News extends Component {
     this.state = {
       articles: [],
       loading: false,
+      page: 1,
     };
   }
-  async componentDidMount(){
+  async componentDidMount() {
     console.log("cdm");
-    let url="https://newsapi.org/v2/top-headlines?country=in&apiKey=f46b05484f864cc7b32735bbe76de782";
-    let data= await fetch(url);
-    let parsedData=await data.json();
+    let url =
+      "https://newsapi.org/v2/top-headlines?country=in&apiKey=f46b05484f864cc7b32735bbe76de782&page=1&pageSize=20";
+    let data = await fetch(url);
+    let parsedData = await data.json();
     console.log(parsedData);
-    this.setState({articles: parsedData.articles});
+    this.setState({
+      articles: parsedData.articles,
+      totalResults: parsedData.totalResults,
+    });
   }
+  handlePrevClick = async () => {
+    console.log(this.state.page);
+    let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=f46b05484f864cc7b32735bbe76de782&page=${
+      this.state.page - 1
+    }&pageSize=20`;
+    let data = await fetch(url);
+    let parsedData = await data.json();
+    console.log(parsedData);
+    this.setState({ articles: parsedData.articles });
+    this.setState({
+      page: this.state.page - 1,
+      articles: parsedData.articles,
+    });
+  };
+
+  handleNextClick = async () => {
+    console.log(this.state.page);
+    let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=f46b05484f864cc7b32735bbe76de782&page=${
+      this.state.page + 1
+    }&pageSize=20`;
+    let data = await fetch(url);
+    let parsedData = await data.json();
+    console.log(parsedData);
+    this.setState({ articles: parsedData.articles });
+    this.setState({
+      page: this.state.page + 1,
+      articles: parsedData.articles,
+    });
+  };
   render() {
     console.log("render");
     return (
@@ -30,13 +64,69 @@ export class News extends Component {
             return (
               <NewsItem
                 key={element.url}
-                title={element.title?element.title.slice(0,45):""}
-                description={element.description?element.description.slice(0,90):""}
-                imageURL={element.urlToImage?element.urlToImage: "https://lh3.googleusercontent.com/J6_coFbogxhRI9iM864NL_liGXvsQp2AupsKei7z0cNNfDvGUmWUy20nuUhkREQyrpY4bEeIBuc=s0-w300-rw"}
+                title={element.title ? element.title.slice(0, 45) : ""}
+                description={
+                  element.description ? element.description.slice(0, 90) : ""
+                }
+                imageURL={
+                  element.urlToImage
+                    ? element.urlToImage
+                    : "https://lh3.googleusercontent.com/J6_coFbogxhRI9iM864NL_liGXvsQp2AupsKei7z0cNNfDvGUmWUy20nuUhkREQyrpY4bEeIBuc=s0-w300-rw"
+                }
                 newsUrl={element.url}
               />
             );
           })}
+        </div>
+        <div className="container flex justify-between mt-6">
+          <button
+            disabled={this.state.page <= 1}
+            type="button"
+            className="inline-flex items-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white hover:bg-black/80"
+            onClick={this.handlePrevClick}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="mr-2 h-4 w-4"
+            >
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Previous
+          </button>
+          <button
+            type="button"
+            disabled={
+              this.state.page + 1 > Math.ceil(this.state.totalResults / 20)
+            }
+            className="inline-flex items-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white hover:bg-black/80"
+            onClick={this.handleNextClick}
+          >
+            Next
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="ml-2 h-4 w-4"
+            >
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
         </div>
       </div>
     );
