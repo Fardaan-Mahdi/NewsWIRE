@@ -56,7 +56,7 @@ export class News extends Component {
     console.log("render");
     return (
       <div className="container my-3 mx-auto">
-        <h2 className="text-xl font-semibold my-3 text-center">
+        <h2 className="text-3xl font-semibold my-3 text-center">
           newsWIRE - Top Headlines
         </h2>
         <div className="grid grid-cols-4 mt-6 gap-7">
@@ -82,7 +82,7 @@ export class News extends Component {
           <button
             disabled={this.state.page <= 1}
             type="button"
-            className="inline-flex items-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white hover:bg-black/80"
+            className={`inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold text-white ${this.state.page <= 1 ? 'bg-gray-700 cursor-not-allowed' : 'bg-black  hover:bg-black/80'}`}
             onClick={this.handlePrevClick}
           >
             <svg
@@ -107,7 +107,7 @@ export class News extends Component {
             disabled={
               this.state.page + 1 > Math.ceil(this.state.totalResults / 20)
             }
-            className="inline-flex items-center rounded-md bg-black px-3 py-2 text-sm font-semibold text-white hover:bg-black/80"
+            className={`inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold text-white ${this.state.page + 1 > Math.ceil(this.state.totalResults / 20) ? 'bg-gray-700 cursor-not-allowed ' : 'bg-black hover:bg-black/80'}`}
             onClick={this.handleNextClick}
           >
             Next
