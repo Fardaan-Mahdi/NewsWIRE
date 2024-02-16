@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
-
+import Spinner from "./spinner";
 export class News extends Component {
   constructor() {
     super();
@@ -14,11 +14,12 @@ export class News extends Component {
   async componentDidMount() {
     console.log("cdm");
     let url =
-      "https://newsapi.org/v2/top-headlines?country=in&apiKey=f46b05484f864cc7b32735bbe76de782&page=1&pageSize=20";
+      `https://newsapi.org/v2/top-headlines?country=in&apiKey=f46b05484f864cc7b32735bbe76de782&page=1&pageSize=${this.props.pageSize}`;
+    this.setState({loading:true});
     let data = await fetch(url);
     let parsedData = await data.json();
-    console.log(parsedData);
     this.setState({
+      loading:false,
       articles: parsedData.articles,
       totalResults: parsedData.totalResults,
     });
@@ -27,12 +28,13 @@ export class News extends Component {
     console.log(this.state.page);
     let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=f46b05484f864cc7b32735bbe76de782&page=${
       this.state.page - 1
-    }&pageSize=20`;
+    }&pageSize=${this.props.pageSize}`;
+    this.setState({loading:true});
     let data = await fetch(url);
     let parsedData = await data.json();
-    console.log(parsedData);
-    this.setState({ articles: parsedData.articles });
     this.setState({
+      loading:false,
+      articles: parsedData.articles,
       page: this.state.page - 1,
       articles: parsedData.articles,
     });
@@ -42,16 +44,19 @@ export class News extends Component {
     console.log(this.state.page);
     let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=f46b05484f864cc7b32735bbe76de782&page=${
       this.state.page + 1
-    }&pageSize=20`;
+    }&pageSize=${this.props.pageSize}`;
+    this.setState({loading:true});
     let data = await fetch(url);
     let parsedData = await data.json();
-    console.log(parsedData);
-    this.setState({ articles: parsedData.articles });
     this.setState({
+      loading:false,
+      articles: parsedData.articles,
       page: this.state.page + 1,
       articles: parsedData.articles,
     });
   };
+
+
   render() {
     console.log("render");
     return (
@@ -59,8 +64,9 @@ export class News extends Component {
         <h2 className="text-3xl font-semibold my-3 text-center">
           newsWIRE - Top Headlines
         </h2>
+        {this.state.loading && <Spinner/>}
         <div className="grid grid-cols-4 mt-6 gap-7">
-          {this.state.articles.map((element) => {
+          {!this.state.loading && this.state.articles.map((element) => {
             return (
               <NewsItem
                 key={element.url}
@@ -105,9 +111,9 @@ export class News extends Component {
           <button
             type="button"
             disabled={
-              this.state.page + 1 > Math.ceil(this.state.totalResults / 20)
+              this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize)
             }
-            className={`inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold text-white ${this.state.page + 1 > Math.ceil(this.state.totalResults / 20) ? 'bg-gray-700 cursor-not-allowed ' : 'bg-black hover:bg-black/80'}`}
+            className={`inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold text-white ${this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize) ? 'bg-gray-700 cursor-not-allowed ' : 'bg-black hover:bg-black/80'}`}
             onClick={this.handleNextClick}
           >
             Next
