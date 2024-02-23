@@ -1,40 +1,42 @@
 "use client";
 
 import React from "react";
+import {
+  BrowserRouter as Router,
+  Link
+} from "react-router-dom";
+
+
 import { Menu, X } from "lucide-react";
 
 const menuItems = [
   {
-    name: "Home",
-    href: "#",
+    name: "General",
+    href: "/general",
   },
   {
     name: "Business",
-    href: "#",
+    href: "/business",
   },
   {
     name: "Entertainment",
-    href: "#",
-  },
-  {
-    name: "General",
-    href: "#",
+    href: "/entertainment",
   },
   {
     name: "Health",
-    href: "#",
+    href: "/health",
   },
   {
     name: "Science",
-    href: "#",
+    href: "/science",
   },
   {
     name: "Sports",
-    href: "#",
+    href: "/sports",
   },
   {
     name: "Technology",
-    href: "#",
+    href: "/technology",
   },
 ];
 
@@ -63,18 +65,18 @@ export function NavBar() {
               />
             </svg>
           </span>
-          <span className="font-bold">NewsWire</span>
+          <Link className="font-bold" to='/general'>NewsWire</Link>
         </div>
         <div className="hidden lg:block">
           <ul className="inline-flex space-x-8">
             {menuItems.map((item) => (
               <li key={item.name}>
-                <a
-                  href={item.href}
+                <Link
+                  to={item.href}
                   className="text-sm font-semibold text-gray-800 hover:text-gray-900"
                 >
                   {item.name}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

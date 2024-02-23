@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
-import Spinner from "./spinner";
+import Spinner from "./Spinner";
 import PropTypes from 'prop-types'
 
 export class News extends Component {
@@ -75,7 +75,7 @@ export class News extends Component {
     return (
       <div className="container my-3 mx-auto">
         <h2 className="text-3xl font-semibold my-3 text-center">
-          newsWIRE - Top Headlines
+          newsWIRE - {this.props.category.charAt(0).toUpperCase() + this.props.category.slice(1)}
         </h2>
         {this.state.loading && <Spinner/>}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6 w-full mx-auto px-3 gap-7">
