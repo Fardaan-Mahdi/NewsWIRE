@@ -30,7 +30,7 @@ export class NavBar extends Component {
                     href="#"
                     className="text-sm font-semibold text-gray-800 hover:text-gray-900"
                   >
-                    Home
+                    Business
                   </a>
                 </li>
                 <li>
@@ -38,7 +38,7 @@ export class NavBar extends Component {
                     href="#"
                     className="text-sm font-semibold text-gray-800 hover:text-gray-900"
                   >
-                    About
+                    Entertainment
                   </a>
                 </li>
                 <li>
@@ -46,7 +46,39 @@ export class NavBar extends Component {
                     href="#"
                     className="text-sm font-semibold text-gray-800 hover:text-gray-900"
                   >
-                    Contact
+                    General
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="text-sm font-semibold text-gray-800 hover:text-gray-900"
+                  >
+                    Health
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="text-sm font-semibold text-gray-800 hover:text-gray-900"
+                  >
+                    Science
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="text-sm font-semibold text-gray-800 hover:text-gray-900"
+                  >
+                    Sports
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="text-sm font-semibold text-gray-800 hover:text-gray-900"
+                  >
+                    Technology
                   </a>
                 </li>
               </ul>
