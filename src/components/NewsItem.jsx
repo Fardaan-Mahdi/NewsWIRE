@@ -7,7 +7,7 @@ export class NewsItem extends Component {
   render() {
     let {title,description,imageURL,newsUrl}=this.props;
     return(
-        <div className="w-[300px] rounded-md border">
+        <div className="rounded-md border">
       <img
         src={imageURL}
         alt="Laptop"
