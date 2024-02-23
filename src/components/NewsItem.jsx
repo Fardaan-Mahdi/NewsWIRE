@@ -8,7 +8,7 @@ export class NewsItem extends Component {
     let { title, description, imageURL, newsUrl, author, date,source } = this.props;
     return (
       <div className="relative rounded-md border">
-        <span class="absolute top-0 right-0 -translate-y-1/2 inline-flex items-center justify-center px-2 py-1 text-sm font-bold leading-none text-white transform bg-blue-900 rounded-full">
+        <span className="absolute top-0 right-0 -translate-y-1/2 inline-flex items-center justify-center px-2 py-1 text-sm font-bold leading-none text-white transform bg-blue-900 rounded-full">
         {source}
         </span>
 
@@ -19,7 +19,7 @@ export class NewsItem extends Component {
         />
         <div className="p-4">
           <h1 className="text-lg font-semibold">{title}...</h1>
-          <p className="mt-3 text-sm text-gray-900">{description}...</p>
+          <p className="mt-3 h-16 text-sm text-gray-900">{description}...</p>
           <p className="mt-3 text-xs text-gray-500">By: {author}</p>
           <p className="text-xs text-gray-500">
             Published: {new Date(date).toLocaleString()}

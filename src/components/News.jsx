@@ -17,17 +17,17 @@ export class News extends Component {
 
   constructor() {
     super();
-    console.log("Hello I am a constructor from News component");
     this.state = {
       articles: [],
       loading: false,
       page: 1,
     };
   }
-  async componentDidMount() {
-    console.log("cdm");
+
+  async updateNews(){
+    console.log(this.state.page);
     let url =
-      `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f46b05484f864cc7b32735bbe76de782&page=1&pageSize=${this.props.pageSize}`;
+      `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f46b05484f864cc7b32735bbe76de782&page=${this.state.page}&pageSize=${this.props.pageSize}`;
     this.setState({loading:true});
     let data = await fetch(url);
     let parsedData = await data.json();
@@ -37,41 +37,29 @@ export class News extends Component {
       totalResults: parsedData.totalResults,
     });
   }
+
+
+  async componentDidMount() {
+    this.updateNews();
+  }
+
+
   handlePrevClick = async () => {
-    console.log(this.state.page);
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f46b05484f864cc7b32735bbe76de782&page=${
-      this.state.page - 1
-    }&pageSize=${this.props.pageSize}`;
-    this.setState({loading:true});
-    let data = await fetch(url);
-    let parsedData = await data.json();
-    this.setState({
-      loading:false,
-      articles: parsedData.articles,
-      page: this.state.page - 1,
-      articles: parsedData.articles,
-    });
+    await this.setState((prevState) => ({
+      page: prevState.page - 1
+    }));
+    this.updateNews();
   };
 
   handleNextClick = async () => {
-    console.log(this.state.page);
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f46b05484f864cc7b32735bbe76de782&page=${
-      this.state.page + 1
-    }&pageSize=${this.props.pageSize}`;
-    this.setState({loading:true});
-    let data = await fetch(url);
-    let parsedData = await data.json();
-    this.setState({
-      loading:false,
-      articles: parsedData.articles,
-      page: this.state.page + 1,
-      articles: parsedData.articles,
-    });
+    await this.setState((prevState) => ({
+      page: prevState.page + 1
+    }));
+    this.updateNews();
   };
 
 
   render() {
-    console.log("render");
     return (
       <div className="container my-3 mx-auto">
         <h2 className="text-3xl font-semibold py-4 text-center">
@@ -83,7 +71,7 @@ export class News extends Component {
             return (
               <NewsItem
                 key={element.url}
-                title={element.title ? element.title.slice(0, 45) : ""}
+                title={element.title ? element.title.slice(0, 75) : ""}
                 description={
                   element.description ? element.description.slice(0, 90) : ""
                 }
