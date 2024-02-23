@@ -74,7 +74,7 @@ export class News extends Component {
     console.log("render");
     return (
       <div className="container my-3 mx-auto">
-        <h2 className="text-3xl font-semibold my-3 text-center">
+        <h2 className="text-3xl font-semibold py-4 text-center">
           newsWIRE - {this.props.category.charAt(0).toUpperCase() + this.props.category.slice(1)}
         </h2>
         {this.state.loading && <Spinner/>}
@@ -93,6 +93,9 @@ export class News extends Component {
                     : "https://lh3.googleusercontent.com/J6_coFbogxhRI9iM864NL_liGXvsQp2AupsKei7z0cNNfDvGUmWUy20nuUhkREQyrpY4bEeIBuc=s0-w300-rw"
                 }
                 newsUrl={element.url}
+                author={element.author ? element.author : "Unknown"}
+                date={element.publishedAt}
+                source={element.source.name}
               />
             );
           })}
