@@ -53,6 +53,7 @@ export function NavBar({onSearch}) {
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter'  || event.target.value === '') {
+      setActiveItem(null);
       handleInputChange(event);
     }
   };
@@ -61,8 +62,14 @@ export function NavBar({onSearch}) {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const [activeItem, setActiveItem] = useState('General');
+
+  const handleClick = (name) => {
+    setActiveItem(name);
+  };
+
   return (
-    <div className="my-3 relative w-full bg-white">
+    <div className="my-2 relative w-full bg-white">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
         <div className="inline-flex items-center space-x-2">
           <span>
@@ -87,7 +94,10 @@ export function NavBar({onSearch}) {
               <li key={item.name}>
                 <Link
                   to={item.href}
-                  className="text-sm font-semibold text-gray-800 hover:text-gray-900"
+                  className={`text-sm font-semibold text-gray-800 hover:text-gray-900 ${
+                    activeItem === item.name ? 'border-b-2 border-black' : ''
+                  }`}
+                  onClick={() => handleClick(item.name)}
                 >
                   {item.name}
                 </Link>

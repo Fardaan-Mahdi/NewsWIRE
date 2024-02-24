@@ -78,7 +78,7 @@ export class News extends Component {
   render() {
     return (
       <div className="container my-3 mx-auto">
-        {this.props.searchQuery.trim() == '' ? <h2 className="text-2xl font-semibold my-4 py-2 rounded-md text-center bg-black text-white ">
+        {this.props.searchQuery.trim() == '' ? <h2 className="text-2xl font-semibold mt-4 mb-10 py-2 rounded-md text-center bg-black text-white ">
           NewsWIRE -{" "}
           {this.props.category.charAt(0).toUpperCase() +
             this.props.category.slice(1)}
