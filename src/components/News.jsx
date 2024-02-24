@@ -1,19 +1,22 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
 import Spinner from "./Spinner";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 
 export class News extends Component {
-  static defaultProps={
-    country:'in',
+  static defaultProps = {
+    country: "in",
     pageSize: 12,
-    category: 'general'
-  }
-  static propTypes={
+    category: "general",
+    apiKey: "b3a3a122c86a41c689b616a89ddcefae"
+  };
+  static propTypes = {
     country: PropTypes.string,
-    pageSize:PropTypes.number,
-    category: PropTypes.string
-  }
+    pageSize: PropTypes.number,
+    category: PropTypes.string,
+    search: PropTypes.bool,
+    searchQuery: PropTypes.string,
+  };
 
   constructor() {
     super();
@@ -21,78 +24,96 @@ export class News extends Component {
       articles: [],
       loading: false,
       page: 1,
+      searchQuery: '',
     };
   }
 
-  async updateNews(){
-    console.log(this.state.page);
-    let url =
-      `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=f46b05484f864cc7b32735bbe76de782&page=${this.state.page}&pageSize=${this.props.pageSize}`;
-    this.setState({loading:true});
+  async updateNews() {
+    let url;
+    console.log(this.props.searchQuery);
+    if (this.props.searchQuery.trim() !== '') {
+      url = `https://newsapi.org/v2/everything?q=${this.props.searchQuery}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+    } else {
+      url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&pageSize=${this.props.pageSize}&apiKey=${this.props.apiKey}&page=${this.state.page}`;
+    }
+
+
+    this.setState({ loading: true });
     let data = await fetch(url);
     let parsedData = await data.json();
     this.setState({
-      loading:false,
+      loading: false,
       articles: parsedData.articles,
       totalResults: parsedData.totalResults,
     });
   }
-
+  
 
   async componentDidMount() {
     this.updateNews();
   }
 
+  async componentDidUpdate(prevProps) {
+    if (prevProps.searchQuery !== this.props.searchQuery) {
+      await this.updateNews();
+    }
+  }
 
   handlePrevClick = async () => {
     await this.setState((prevState) => ({
-      page: prevState.page - 1
+      page: prevState.page - 1,
     }));
     this.updateNews();
   };
 
   handleNextClick = async () => {
     await this.setState((prevState) => ({
-      page: prevState.page + 1
+      page: prevState.page + 1,
     }));
     this.updateNews();
   };
-
 
   render() {
     return (
       <div className="container my-3 mx-auto">
         <h2 className="text-3xl font-semibold py-4 text-center">
-          newsWIRE - {this.props.category.charAt(0).toUpperCase() + this.props.category.slice(1)}
+          newsWIRE -{" "}
+          {this.props.category.charAt(0).toUpperCase() +
+            this.props.category.slice(1)}
         </h2>
-        {this.state.loading && <Spinner/>}
+        {this.state.loading && <Spinner />}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6 w-full mx-auto px-3 gap-7">
-          {!this.state.loading && this.state.articles.map((element) => {
-            return (
-              <NewsItem
-                key={element.url}
-                title={element.title ? element.title.slice(0, 75) : ""}
-                description={
-                  element.description ? element.description.slice(0, 90) : ""
-                }
-                imageURL={
-                  element.urlToImage
-                    ? element.urlToImage
-                    : "https://lh3.googleusercontent.com/J6_coFbogxhRI9iM864NL_liGXvsQp2AupsKei7z0cNNfDvGUmWUy20nuUhkREQyrpY4bEeIBuc=s0-w300-rw"
-                }
-                newsUrl={element.url}
-                author={element.author ? element.author : "Unknown"}
-                date={element.publishedAt}
-                source={element.source.name}
-              />
-            );
-          })}
+          {!this.state.loading &&
+            this.state.articles.map((element) => {
+              return (
+                <NewsItem
+                  key={element.url}
+                  title={element.title ? element.title.slice(0, 45) : ""}
+                  description={
+                    element.description ? element.description.slice(0, 90) : ""
+                  }
+                  imageURL={
+                    element.urlToImage
+                      ? element.urlToImage
+                      : "https://lh3.googleusercontent.com/J6_coFbogxhRI9iM864NL_liGXvsQp2AupsKei7z0cNNfDvGUmWUy20nuUhkREQyrpY4bEeIBuc=s0-w300-rw"
+                  }
+                  newsUrl={element.url}
+                  author={element.author ? element.author : "Unknown"}
+                  date={element.publishedAt}
+                  source={element.source.name}
+                />
+              );
+            })}
         </div>
         <div className="container flex justify-between mt-6">
           <button
             disabled={this.state.page <= 1}
             type="button"
-            className={`inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold text-white ${this.state.page <= 1 ? 'bg-gray-700 cursor-not-allowed' : 'bg-black  hover:bg-black/80'}`}
+            className={`inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold text-white ${
+              this.state.page <= 1
+                ? "bg-gray-700 cursor-not-allowed"
+                : "bg-black  hover:bg-black/80"
+            }`}
             onClick={this.handlePrevClick}
           >
             <svg
@@ -115,9 +136,15 @@ export class News extends Component {
           <button
             type="button"
             disabled={
-              this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize)
+              this.state.page + 1 >
+              Math.ceil(this.state.totalResults / this.props.pageSize)
             }
-            className={`inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold text-white ${this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize) ? 'bg-gray-700 cursor-not-allowed ' : 'bg-black hover:bg-black/80'}`}
+            className={`inline-flex items-center rounded-md px-3 py-2 text-sm font-semibold text-white ${
+              this.state.page + 1 >
+              Math.ceil(this.state.totalResults / this.props.pageSize)
+                ? "bg-gray-700 cursor-not-allowed "
+                : "bg-black hover:bg-black/80"
+            }`}
             onClick={this.handleNextClick}
           >
             Next
