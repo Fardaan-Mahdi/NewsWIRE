@@ -52,7 +52,7 @@ export function NavBar({onSearch}) {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter'  || event.target.value === '') {
       handleInputChange(event);
     }
   };
@@ -62,7 +62,7 @@ export function NavBar({onSearch}) {
   };
 
   return (
-    <div className="relative w-full bg-white">
+    <div className="my-3 relative w-full bg-white">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
         <div className="inline-flex items-center space-x-2">
           <span>
@@ -105,7 +105,12 @@ export function NavBar({onSearch}) {
                   aria-label="Search"
                   aria-describedby="button-addon2" 
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    if (e.target.value === '') {
+                      handleKeyDown(e);
+                  }
+                }}
                   onKeyDown={handleKeyDown}/>
           </div>
       </div>

@@ -18,7 +18,7 @@ export class NewsItem extends Component {
           className="h-[200px] w-full rounded-md object-cover"
         />
         <div className="p-4">
-          <h1 className="text-lg font-semibold">{title}...</h1>
+          <h1 className="text-lg h-20 font-semibold">{title}...</h1>
           <p className="mt-3 h-16 text-sm text-gray-900">{description}...</p>
           <p className="mt-3 text-xs text-gray-500">By: {author}</p>
           <p className="text-xs text-gray-500">
@@ -26,7 +26,7 @@ export class NewsItem extends Component {
           </p>
           <button
             type="button"
-            className="mt-4 w-full rounded-sm bg-black px-2 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+            className="mt-4 w-full rounded bg-black px-2 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
           >
             <a href={newsUrl} target="_blank">
               Read More

@@ -18,14 +18,15 @@ export class News extends Component {
     searchQuery: PropTypes.string,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       articles: [],
       loading: false,
       page: 1,
       searchQuery: '',
     };
+    document.title=`${this.props.category.charAt(0).toUpperCase()+this.props.category.slice(1)} - NewsWIRE`;
   }
 
   async updateNews() {
@@ -34,6 +35,7 @@ export class News extends Component {
     if (this.props.searchQuery.trim() !== '') {
       url = `https://newsapi.org/v2/everything?q=${this.props.searchQuery}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
     } else {
+      console.log("this");
       url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&pageSize=${this.props.pageSize}&apiKey=${this.props.apiKey}&page=${this.state.page}`;
     }
 
@@ -76,11 +78,11 @@ export class News extends Component {
   render() {
     return (
       <div className="container my-3 mx-auto">
-        <h2 className="text-3xl font-semibold py-4 text-center">
-          newsWIRE -{" "}
+        {this.props.searchQuery.trim() == '' ? <h2 className="text-2xl font-semibold my-4 py-2 rounded-md text-center bg-black text-white ">
+          NewsWIRE -{" "}
           {this.props.category.charAt(0).toUpperCase() +
             this.props.category.slice(1)}
-        </h2>
+        </h2> : <h2></h2>}
         {this.state.loading && <Spinner />}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6 w-full mx-auto px-3 gap-7">
           {!this.state.loading &&
@@ -88,7 +90,7 @@ export class News extends Component {
               return (
                 <NewsItem
                   key={element.url}
-                  title={element.title ? element.title.slice(0, 45) : ""}
+                  title={element.title ? element.title.slice(0, 70) : ""}
                   description={
                     element.description ? element.description.slice(0, 90) : ""
                   }
