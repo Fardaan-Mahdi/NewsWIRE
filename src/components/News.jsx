@@ -34,6 +34,7 @@ export class News extends Component {
   }
 
   async updateNews() {
+    this.props.setProgress(25);
     let url;
     if (this.props.searchQuery.trim() !== "") {
       url = `https://newsapi.org/v2/everything?q=${this.props.searchQuery}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
@@ -43,12 +44,14 @@ export class News extends Component {
 
     this.setState({ loading: true });
     let data = await fetch(url);
+    this.props.setProgress(70);
     let parsedData = await data.json();
     this.setState({
       loading: false,
       articles: parsedData.articles,
       totalResults: parsedData.totalResults,
     });
+    this.props.setProgress(100);
   }
 
   async componentDidMount() {

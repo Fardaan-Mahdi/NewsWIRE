@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 
 import { Menu, X } from "lucide-react";
@@ -58,13 +58,21 @@ export function NavBar({ onSearch }) {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const [activeItem, setActiveItem] = useState("General");
+  useEffect(() => {
+    const storedActiveItem = localStorage.getItem("activeItem");
+    if (storedActiveItem) {
+      setActiveItem(storedActiveItem);
+    }
+  }, []);
+
+  const [activeItem, setActiveItem] = useState("");
 
   const handleClick = (name) => {
     setSearchQuery("");
     setSearchTerm("");
     onSearch("");
     setActiveItem(name);
+    localStorage.setItem("activeItem", name);
   };
 
   return (
