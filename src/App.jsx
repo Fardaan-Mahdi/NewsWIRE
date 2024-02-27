@@ -7,6 +7,7 @@ function App() {
   const pageSize=12;
   const apiKey="f46b05484f864cc7b32735bbe76de782";
   // const apiKey="b3a3a122c86a41c689b616a89ddcefae";
+  // const apiKey="cf45cee3f1d94996bd6c73128274400f";
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearch = (query) => {

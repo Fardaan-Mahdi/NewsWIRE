@@ -56,7 +56,7 @@ export class News extends Component {
   }
 
   async componentDidUpdate(prevProps) {
-    if (prevProps.searchQuery !== this.props.searchQuery) {
+    if ((prevProps.searchQuery !== this.props.searchQuery)) {
       await this.updateNews();
     }
   }

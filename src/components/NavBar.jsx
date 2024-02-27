@@ -1,11 +1,7 @@
 "use client";
 
-import React, {useState} from "react";
-import {
-  BrowserRouter as Router,
-  Link
-} from "react-router-dom";
-
+import React, { useState } from "react";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 import { Menu, X } from "lucide-react";
 
@@ -40,19 +36,19 @@ const menuItems = [
   },
 ];
 
-export function NavBar({onSearch}) {
+export function NavBar({ onSearch }) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleInputChange = (event) => {
     const query = event.target.value;
-    setSearchQuery(query); 
-    onSearch(query); 
+    setSearchQuery(query);
+    onSearch(query);
   };
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter'  || event.target.value === '') {
+    if (event.key === "Enter" || event.target.value === "" ) {
       setActiveItem(null);
       handleInputChange(event);
     }
@@ -62,9 +58,12 @@ export function NavBar({onSearch}) {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const [activeItem, setActiveItem] = useState('General');
+  const [activeItem, setActiveItem] = useState("General");
 
   const handleClick = (name) => {
+    setSearchQuery("");
+    setSearchTerm("");
+    onSearch("");
     setActiveItem(name);
   };
 
@@ -86,7 +85,9 @@ export function NavBar({onSearch}) {
               />
             </svg>
           </span>
-          <Link className="font-bold" to='/general'>NewsWire</Link>
+          <Link className="font-bold" to="/general">
+            NewsWire
+          </Link>
         </div>
         <div className="hidden lg:block">
           <ul className="inline-flex space-x-8">
@@ -95,7 +96,7 @@ export function NavBar({onSearch}) {
                 <Link
                   to={item.href}
                   className={`text-sm font-semibold text-gray-800 hover:text-gray-900 ${
-                    activeItem === item.name ? 'border-b-2 border-black' : ''
+                    activeItem === item.name ? "border-b-2 border-black" : ""
                   }`}
                   onClick={() => handleClick(item.name)}
                 >
@@ -106,24 +107,25 @@ export function NavBar({onSearch}) {
           </ul>
         </div>
         <div className="hidden lg:block">
-        <div className="w-auto">
-          <div className="relative flex w-full flex-wrap items-stretch">
+          <div className="w-auto">
+            <div className="relative flex w-full flex-wrap items-stretch">
               <input
-                  type="search"
-                  className="relative m-0 block flex-auto rounded border border-solid border-neutral-500 bg-transparent bg-clip-padding px-3 py-[0.15rem] text-base font-normal leading-[1.6] text-neutral-900 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
-                  placeholder="Search"
-                  aria-label="Search"
-                  aria-describedby="button-addon2" 
-                  value={searchTerm}
-                  onChange={(e) => {
-                    setSearchTerm(e.target.value);
-                    if (e.target.value === '') {
-                      handleKeyDown(e);
+                type="search"
+                className="relative m-0 block flex-auto rounded border border-solid border-neutral-500 bg-transparent bg-clip-padding px-3 py-[0.15rem] text-base font-normal leading-[1.6] text-neutral-900 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
+                placeholder="Search"
+                aria-label="Search"
+                aria-describedby="button-addon2"
+                value={searchTerm}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  if (e.target.value === "") {
+                    handleKeyDown(e);
                   }
                 }}
-                  onKeyDown={handleKeyDown}/>
+                onKeyDown={handleKeyDown}
+              />
+            </div>
           </div>
-      </div>
         </div>
         <div className="lg:hidden">
           <Menu onClick={toggleMenu} className="h-6 w-6 cursor-pointer" />
@@ -177,16 +179,16 @@ export function NavBar({onSearch}) {
                   </nav>
                 </div>
                 <div className="w-auto mt-5 ml-3">
-          <div className="relative flex w-full flex-wrap items-stretch">
-              <input
-                  type="search"
-                  className="relative m-0 block flex-auto rounded border border-solid border-neutral-500 bg-transparent bg-clip-padding px-3 py-[0.15rem] text-base font-normal leading-[1.6] text-neutral-900 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
-                  placeholder="Search"
-                  aria-label="Search"
-                  aria-describedby="button-addon2" />
-
-          </div>
-      </div>
+                  <div className="relative flex w-full flex-wrap items-stretch">
+                    <input
+                      type="search"
+                      className="relative m-0 block flex-auto rounded border border-solid border-neutral-500 bg-transparent bg-clip-padding px-3 py-[0.15rem] text-base font-normal leading-[1.6] text-neutral-900 placeholder-neutral-700 placeholder-opacity-50 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
+                      placeholder="Search"
+                      aria-label="Search"
+                      aria-describedby="button-addon2"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
