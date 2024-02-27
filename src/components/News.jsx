@@ -9,7 +9,6 @@ export class News extends Component {
     country: "in",
     pageSize: 12,
     category: "general",
-    apiKey: "b3a3a122c86a41c689b616a89ddcefae",
   };
   static propTypes = {
     country: PropTypes.string,
@@ -34,7 +33,7 @@ export class News extends Component {
   }
 
   async updateNews() {
-    this.props.setProgress(25);
+    this.props.setProgress(15);
     let url;
     if (this.props.searchQuery.trim() !== "") {
       url = `https://newsapi.org/v2/everything?q=${this.props.searchQuery}&apiKey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
@@ -44,7 +43,7 @@ export class News extends Component {
 
     this.setState({ loading: true });
     let data = await fetch(url);
-    this.props.setProgress(70);
+    this.props.setProgress(50);
     let parsedData = await data.json();
     this.setState({
       loading: false,
@@ -91,13 +90,15 @@ export class News extends Component {
     return (
       <div className="container my-3 mx-auto">
         {this.props.searchQuery.trim() == "" ? (
-          <h2 className="text-2xl font-semibold mt-4 mb-10 py-2 rounded-md text-center bg-black text-white ">
+          <h2 className="text-3xl font-semibold my-4 py-3 rounded-md text-center text-black">
             NewsWIRE -{" "}
             {this.props.category.charAt(0).toUpperCase() +
               this.props.category.slice(1)}
           </h2>
         ) : (
-          <h2></h2>
+          <h2 className="text-left text-base ml-3 font-semibold mt-3 rounded-md text-black">
+            Search Results: {this.state.totalResults}
+          </h2>
         )}
 
         {this.state.loading && <Spinner />}
@@ -108,7 +109,7 @@ export class News extends Component {
           hasMore={this.state.articles.length !== this.state.totalResults}
           loader={<Spinner />}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6 w-full mx-auto px-3 gap-7">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-4 w-full mx-auto px-3 gap-7">
             {this.state.articles.map((element) => {
               return (
                 <NewsItem

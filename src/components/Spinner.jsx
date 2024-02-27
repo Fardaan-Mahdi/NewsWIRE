@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import spinner from '../../public/spinner.gif'
+import spinner from '/spinner.gif'
 
 
 export class Spinner extends Component {
