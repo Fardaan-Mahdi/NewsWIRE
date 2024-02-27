@@ -36,7 +36,7 @@ const menuItems = [
   },
 ];
 
-export function NavBar({ onSearch }) {
+export function NavBar({ onSearch ,categoryUpdate}) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -58,13 +58,6 @@ export function NavBar({ onSearch }) {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  useEffect(() => {
-    const storedActiveItem = localStorage.getItem("activeItem");
-    if (storedActiveItem) {
-      setActiveItem(storedActiveItem);
-    }
-  }, []);
-
   const [activeItem, setActiveItem] = useState("");
 
   const handleClick = (name) => {
@@ -72,11 +65,11 @@ export function NavBar({ onSearch }) {
     setSearchTerm("");
     onSearch("");
     setActiveItem(name);
-    localStorage.setItem("activeItem", name);
   };
+  
 
   return (
-    <div className="py-3 relative w-full bg-black text-white">
+    <div className="sticky z-10 top-0 py-2 w-full bg-black text-white">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
         <div className="inline-flex items-center space-x-2">
           <span>
@@ -103,8 +96,8 @@ export function NavBar({ onSearch }) {
               <li key={item.name}>
                 <Link
                   to={item.href}
-                  className={`text-base font-semibold text-gray-400 hover:text-white ${
-                    activeItem === item.name ? "border-b-2 border-white text-white" : ""
+                  className={`text-sm font-medium text-gray-400 hover:text-white ${
+                    categoryUpdate === item.name ? "border-b-2 border-white text-white" : ""
                   }`}
                   onClick={() => handleClick(item.name)}
                 >
@@ -119,7 +112,7 @@ export function NavBar({ onSearch }) {
             <div className="relative flex w-full flex-wrap items-stretch">
               <input
                 type="search"
-                className="relative m-0 block flex-auto rounded border border-solid border-neutral-500 bg-transparent bg-clip-padding px-3 py-[0.15rem] text-base font-normal leading-[1.6] text-neutral-900 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-white focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
+                className="relative m-0 block flex-auto rounded border border-solid border-neutral-500 bg-transparent bg-clip-padding px-3 py-1.5 text-sm font-normal leading-[1.6] text-neutral-900 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-white focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
                 placeholder="Search"
                 aria-label="Search"
                 aria-describedby="button-addon2"
@@ -190,7 +183,7 @@ export function NavBar({ onSearch }) {
                   <div className="relative flex w-full flex-wrap items-stretch">
                     <input
                       type="search"
-                      className="relative m-0 block flex-auto rounded border border-solid border-neutral-500 bg-transparent bg-clip-padding px-3 py-[0.15rem] text-base font-normal leading-[1.6] text-neutral-900 placeholder-neutral-700 placeholder-opacity-50 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-white focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
+                      className="relative m-0 block flex-auto rounded border border-solid border-neutral-500 bg-transparent bg-clip-padding px-3 py-1 text-sm font-normal leading-[1.6] text-neutral-900 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-white focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
                       placeholder="Search"
                       aria-label="Search"
                       aria-describedby="button-addon2"

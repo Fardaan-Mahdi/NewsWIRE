@@ -9,6 +9,7 @@ function App() {
   const [progress, setProgress] = useState(10);
 
   const apiKey = import.meta.env.VITE_NEWS_API;
+  // const apiKey = "b3a3a122c86a41c689b616a89ddcefae";
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -16,17 +17,23 @@ function App() {
     setSearchQuery(query);
   };
 
+  const [categoryUpdate,setCategoryUpdate]=useState('General');
+
+  function getData(data){
+    setCategoryUpdate(data.charAt(0).toUpperCase() +
+    data.slice(1));
+  }
   return (
     <Router>
       <div>
         <LoadingBar color="#f11946" height={3} progress={progress} />
-        <Navbar onSearch={handleSearch} />
+        <Navbar onSearch={handleSearch} categoryUpdate={categoryUpdate} />
         <Routes>
           <Route
             exact
             path="/"
             element={
-              <News
+              <News getData={getData}
                 setProgress={setProgress}
                 key="general"
                 pageSize={pageSize}
@@ -42,7 +49,7 @@ function App() {
             exact
             path="/general"
             element={
-              <News
+              <News getData={getData}
                 setProgress={setProgress}
                 key="general"
                 pageSize={pageSize}
@@ -58,7 +65,7 @@ function App() {
             exact
             path="/business"
             element={
-              <News
+              <News getData={getData}
                 setProgress={setProgress}
                 key="business"
                 pageSize={pageSize}
@@ -74,7 +81,7 @@ function App() {
             exact
             path="/entertainment"
             element={
-              <News
+              <News getData={getData}
                 setProgress={setProgress}
                 key="entertainment"
                 pageSize={pageSize}
@@ -90,7 +97,7 @@ function App() {
             exact
             path="/health"
             element={
-              <News
+              <News getData={getData}
                 setProgress={setProgress}
                 key="health"
                 pageSize={pageSize}
@@ -106,7 +113,7 @@ function App() {
             exact
             path="/science"
             element={
-              <News
+              <News getData={getData}
                 setProgress={setProgress}
                 key="science"
                 pageSize={pageSize}
@@ -122,7 +129,7 @@ function App() {
             exact
             path="/sports"
             element={
-              <News
+              <News getData={getData}
                 setProgress={setProgress}
                 key="sports"
                 pageSize={pageSize}
@@ -138,7 +145,7 @@ function App() {
             exact
             path="/technology"
             element={
-              <News
+              <News getData={getData}
                 setProgress={setProgress}
                 key="technology"
                 pageSize={pageSize}

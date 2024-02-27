@@ -7,7 +7,7 @@ export class NewsItem extends Component {
   render() {
     let { title, description, imageURL, newsUrl, author, date,source } = this.props;
     return (
-      <div className="relative rounded-md border">
+      <div className="relative rounded-md border ">
         <span className="absolute top-0 -right-2 -translate-y-1/2 inline-flex items-center justify-center px-2.5 py-1.5 text-sm font-bold leading-none text-white transform bg-blue-950 rounded-full">
         {source}
         </span>

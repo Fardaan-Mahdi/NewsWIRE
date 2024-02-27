@@ -10,7 +10,6 @@ export function News(props) {
   const [page,setPage]=useState(1);
   const [searchQuery,setSearchQuery]=useState("");
   const [totalResults,setTotalResults]=useState("");
-  console.log(props.searchQuery);
   useEffect(() => {
     document.title = `${props.category.charAt(0).toUpperCase() + props.category.slice(1)} - NewsWIRE`;
   }, [props.category]);
@@ -19,9 +18,11 @@ export function News(props) {
   async function updateNews() {
     props.setProgress(15);
     let url;
+    
     if (props.searchQuery.trim() !== "") {
       url = `https://newsapi.org/v2/everything?q=${props.searchQuery}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
     } else {
+      props.getData(props.category);
       url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&pageSize=${props.pageSize}&apiKey=${props.apiKey}&page=${page}`;
     }
 
@@ -70,7 +71,7 @@ export function News(props) {
   return (
     <div className="container my-3 mx-auto">
         {searchQuery.trim() == "" ? (
-          <h2 className="text-3xl font-semibold my-4 py-3 rounded-md text-center text-black">
+          <h2 className="text-2xl font-semibold my-2 py-3 rounded-md text-center text-black">
             NewsWIRE -{" "}
             {props.category.charAt(0).toUpperCase() +
               props.category.slice(1)}
