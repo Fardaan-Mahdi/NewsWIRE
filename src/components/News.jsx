@@ -24,6 +24,8 @@ export function News(props) {
     } else {
       props.getData(props.category);
       url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&pageSize=${props.pageSize}&apiKey=${props.apiKey}&page=${page}`;
+
+      // url = `https://gnews.io/api/v4/top-headlines?country=${props.country}&category=${props.category}&max=${props.pageSize}&apikey=${props.apiKey}`;
     }
 
     setLoading(true );
@@ -55,6 +57,8 @@ export function News(props) {
         url = `https://newsapi.org/v2/everything?q=${props.searchQuery}&apiKey=${props.apiKey}&page=${nextPage}&pageSize=${props.pageSize}`;
       } else {
         url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&pageSize=${props.pageSize}&apiKey=${props.apiKey}&page=${nextPage}`;
+
+        // url = `https://gnews.io/api/v4/top-headlines?country=${props.country}&max=${props.pageSize}&category=${props.category}&apikey=${props.apiKey}`;
       }
 
       const response = await fetch(url);
@@ -99,8 +103,10 @@ export function News(props) {
                     element.description ? element.description.slice(0, 90) : ""
                   }
                   imageURL={
+                    // element.image
+                    //   ? element.image
                     element.urlToImage
-                      ? element.urlToImage
+                    ? element.urlToImage
                       : "https://lh3.googleusercontent.com/J6_coFbogxhRI9iM864NL_liGXvsQp2AupsKei7z0cNNfDvGUmWUy20nuUhkREQyrpY4bEeIBuc=s0-w300-rw"
                   }
                   newsUrl={element.url}
